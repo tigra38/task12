@@ -3,7 +3,8 @@
 using namespace std;
 
 #define NO_OF_CHARS 256  
-#define debug true
+//#define debug true
+#define debug false
 
 void badCharHeuristic(string str, int size, int badchar[NO_OF_CHARS])
 {
@@ -13,9 +14,7 @@ void badCharHeuristic(string str, int size, int badchar[NO_OF_CHARS])
         badchar[i] = -1;
 
     for (i = 0; i < size; i++)
-    {
         badchar[(int)str[i]] = i;
-    }
 
     if (debug)
     {
@@ -27,45 +26,10 @@ void badCharHeuristic(string str, int size, int badchar[NO_OF_CHARS])
             cout << badchar[i] << " ";
             if (i % 16 == 15) cout << endl;
         }
-
         cout << "end" << endl;
     }
 
 }
-
-/*void search(string txt, string pat)
-{
-    int m = pat.size();
-    int n = txt.size();
-
-    cout << m << "-" << n << endl;
-
-    int badchar[NO_OF_CHARS];
-
-    badCharHeuristic(pat, m, badchar);
-
-    int s = 0;
-    while (s <= (n - m))
-    {
-        int j = m - 1;
-
-        while (j >= 0 && pat[j] == txt[s + j])
-            j--;
-
-        if (j < 0)
-        {
-            cout << "pattern occurs at shift = " << s << endl;
-
-            s += (s + m < n) ? m - badchar[txt[s + m]] : 1;
-
-        }
-        else
-        {
-            int bc = badchar[txt[s + j]];
-            s += max(1, j - bc);
-        }
-    }
-}*/
 
 int search_K(string txt, string pat)
 {
@@ -76,14 +40,11 @@ int search_K(string txt, string pat)
     if (debug) cout << "pat size: " << m << ", txt size: " << n << endl;
 
     int badchar[NO_OF_CHARS];
-
     badCharHeuristic(pat, m, badchar);
-
     int s = 0;
     while (s <= (n - m))
     {
         int j = m - 1;
-
         while (j >= 0 && pat[j] == txt[s + j])
             j--;
 
@@ -92,7 +53,6 @@ int search_K(string txt, string pat)
             if (debug) cout << "pattern occurs at shift = " << s << endl;
             match++;
             s += (s + m < n) ? m - badchar[txt[s + m]] : 1;
-
         }
         else
         {
@@ -119,7 +79,7 @@ bool FoundNonPeriodic(string txt, int K)
             {
                 cout << "^";
                 for (int l = 0; l < K - 1; l++) cout << " ";
-                cout << "^ Non-periodic symbol (" << K * i + j << ")" << endl;
+                cout << "^ Non-periodic symbol #" << K * i + j << endl;
                 return false;
             }
             cout << " ";
